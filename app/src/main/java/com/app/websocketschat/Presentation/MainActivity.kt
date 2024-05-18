@@ -2,29 +2,37 @@ package com.app.websocketschat.Presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Button
-import android.widget.EditText
+import com.app.websocketschat.Data.Remote.MyWebSocketListener
+import com.app.websocketschat.Data.Remote.WebSocketManager
 import com.app.websocketschat.R
 import dagger.hilt.android.AndroidEntryPoint
-import androidx.activity.viewModels
-import androidx.lifecycle.Observer
 
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    private val viewModel: ChatViewModel by viewModels()
-
+    //private val viewModel: ChatViewModel by viewModels()
+    private lateinit var webSocketManager: WebSocketManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        viewModel.connect()
+        webSocketManager = WebSocketManager()
 
-       /* viewModel.messages.observe(this, Observer { messages ->
+        val webSocketUrl = "ws://192.168.56.1:3000"
+        val webSocketListener = MyWebSocketListener()
+
+        // Connect to the WebSocket server
+        webSocketManager.connect(webSocketUrl, webSocketListener)
+
+        // Send a message
+        val message = "Walid Salah"
+        webSocketManager.sendMessage(message)
+        // viewModel.connect()
+/*
+        viewModel.messages.observe(this, Observer { messages ->
             Log.e("message",messages.get(messages.size-1).message)
-        })
+        })*/
 
-        findViewById<Button>(R.id.send_message).setOnClickListener {
+       /* findViewById<Button>(R.id.send_message).setOnClickListener {
             val message = findViewById<EditText>(R.id.send_message_text).text.toString()
             viewModel.sendMessage("User", message)
         }*/

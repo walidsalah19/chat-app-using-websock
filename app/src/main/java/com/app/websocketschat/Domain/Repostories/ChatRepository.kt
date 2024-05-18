@@ -7,5 +7,5 @@ interface ChatRepository {
     fun connect()
     fun sendMessage(chatMessage: MessageDataClass)
     fun closeConnection()
-    fun getAllMessages():Flow<List<MessageDataClass>>
+   // fun getAllMessages():Flow<List<MessageDataClass>>
 }

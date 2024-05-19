@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id ("dagger.hilt.android.plugin")
     id("kotlin-kapt")
 }
 
@@ -60,8 +61,9 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel:2.3.1")
     implementation("androidx.lifecycle:lifecycle-livedata:2.3.1")
     //dagger hilt
-    implementation("com.google.dagger:hilt-android:2.44")
-    annotationProcessor("com.google.dagger:hilt-compiler:2.44")
+    implementation("com.google.dagger:hilt-android:2.48")
+    kapt("com.google.dagger:hilt-android-compiler:2.48")
+
     //retrofit
     implementation("com.squareup.retrofit2:adapter-rxjava2:2.4.0")
     implementation("com.squareup.retrofit2:converter-gson:2.4.0")

@@ -5,9 +5,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.app.websocketschat.Domain.Models.MessageDataClass
 
-@Database(entities = [MessageDataClass::class], version = 1)
+@Database(entities = [EntityMessage::class], version = 1)
 abstract class RoomData : RoomDatabase() {
 
     abstract fun dao(): DaoInterface

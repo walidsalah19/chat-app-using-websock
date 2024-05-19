@@ -1,6 +1,7 @@
 package com.app.websocketschat.Data.Remote
 
 import okhttp3.*
+import okhttp3.WebSocketListener
 import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.TimeUnit
 

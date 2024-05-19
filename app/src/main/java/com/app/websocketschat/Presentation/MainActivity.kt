@@ -1,57 +1,113 @@
 package com.app.websocketschat.Presentation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.app.websocketschat.Data.Remote.MyWebSocketListener
-import com.app.websocketschat.Data.Remote.WebSocketManager
-import com.app.websocketschat.R
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.app.websocketschat.Domain.Models.Messages
+import com.app.websocketschat.Presentation.Adapter.AdapterClass
+import com.app.websocketschat.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import java.net.NetworkInterface
+import java.text.SimpleDateFormat
+import java.util.Collections
+import java.util.Date
+import java.util.Locale
 
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
     private val viewModel: WebSocketViewModel by viewModels()
-    //private lateinit var webSocketManager: WebSocketManager
+    private var listMessages = ArrayList<Messages>()
+
+    private val adapter: AdapterClass by lazy {
+        AdapterClass(listMessages)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        viewModel.connect()
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        initRecyclerView()
+        getAllMessages()
+        getReceivedMessage()
+        sendMessage()
 
-        viewModel.messages.observe(this, Observer { message ->
-            // Update UI with the received message
+    }
+
+    fun initRecyclerView() {
+        binding.recyclerviewChat.layoutManager = LinearLayoutManager(this)
+        binding.recyclerviewChat.adapter = adapter
+        adapter.senderIdAdd(getMacAddress())
+    }
+
+    fun getAllMessages() {
+        lifecycleScope.launchWhenStarted {
+            viewModel.messages.collect {
+                listMessages.addAll(it)
+                adapter.notifyDataSetChanged()
+            }
+        }
+    }
+
+    fun getReceivedMessage() {
+        viewModel.receivedData().observe(this, Observer { received ->
+            Log.e("rData", received.message)
+            listMessages.add(received)
+            adapter.notifyDataSetChanged()
         })
+    }
 
+    fun sendMessage() {
+        binding.sendMessage.setOnClickListener {
+
+            val m =
+                Messages(binding.sendMessageText.text.toString(), getMacAddress(), "", getTime())
+            viewModel.connect()
+            viewModel.sendMessage(m)
+            viewModel.closeConnection()
+
+        }
+    }
+
+    fun getTime(): String {
+        val currentDate = Date()
+        val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+        val formattedDate = dateFormat.format(currentDate)
+
+        return formattedDate
+    }
+
+    fun getMacAddress(): String {
+        try {
+            val all = Collections.list(NetworkInterface.getNetworkInterfaces())
+            for (nif in all) {
+                if (!nif.name.equals("wlan0", ignoreCase = true)) continue
+
+                val macBytes = nif.hardwareAddress ?: return "02:00:00:00:00:00"
+                val res1 = StringBuilder()
+                for (b in macBytes) {
+                    res1.append(String.format("%02X:", b))
+                }
+
+                if (res1.isNotEmpty()) {
+                    res1.deleteCharAt(res1.length - 1)
+                }
+                return res1.toString()
+            }
+        } catch (ex: Exception) {
+            // Handle exception
+        }
+        return "02:00:00:00:00:00"
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
         // Send a message
-        viewModel.sendMessage("Hello WebSocket")
-
-        // Close the connection
         viewModel.closeConnection()
-
-
-
-
-      /*  webSocketManager = WebSocketManager()
-
-        val webSocketUrl = "ws://192.168.56.1:3000"
-        val webSocketListener = MyWebSocketListener()
-
-        // Connect to the WebSocket server
-        webSocketManager.connect(webSocketUrl, webSocketListener)
-
-        // Send a message
-        val message = "Walid Salah"
-        webSocketManager.sendMessage(message)
-        // viewModel.connect()
-*//*
-        viewModel.messages.observe(this, Observer { messages ->
-            Log.e("message",messages.get(messages.size-1).message)
-        })*//*
-
-       *//* findViewById<Button>(R.id.send_message).setOnClickListener {
-            val message = findViewById<EditText>(R.id.send_message_text).text.toString()
-            viewModel.sendMessage("User", message)
-        }*/
     }
 }

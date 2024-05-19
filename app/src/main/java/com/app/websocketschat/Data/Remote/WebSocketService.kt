@@ -1,48 +1,44 @@
 package com.app.websocketschat.Data.Remote
 
-// WebSocketService.kt
+import com.app.websocketschat.Domain.Models.Messages
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
-import okio.ByteString
+import okhttp3.logging.HttpLoggingInterceptor
+import java.util.concurrent.TimeUnit
 
-class WebSocketService(private val url: String) : WebSocketListener() {
-
+class WebSocketService(private val url: String) {
     private var webSocket: WebSocket? = null
-    private val client = OkHttpClient()
+    private var listener: WebSocketListener? = null
 
-    fun start() {
-        val request = Request.Builder().url(url).build()
-        webSocket = client.newWebSocket(request, this)
+    fun start(listener: WebSocketListener) {
+        this.listener = listener
+        val client = OkHttpClient.Builder()
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(10, TimeUnit.SECONDS)
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            })
+            .build()
+
+        val request = Request.Builder()
+            .url(url)
+            .build()
+
+        webSocket = client.newWebSocket(request, listener)
     }
 
-    fun send(message: String) {
+    fun send(message: Messages) {
+        val message=convertMessage(message =message)
         webSocket?.send(message)
     }
 
     fun close() {
-        webSocket?.close(1000, "Goodbye")
+        webSocket?.close(1000, "close")
     }
-
-    override fun onOpen(webSocket: WebSocket, response: okhttp3.Response) {
-        // Handle connection opened
-    }
-
-    override fun onMessage(webSocket: WebSocket, text: String) {
-        // Handle incoming message
-    }
-
-    override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
-        // Handle incoming binary message
-    }
-
-    override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
-        webSocket.close(1000, null)
-        // Handle connection closing
-    }
-
-    override fun onFailure(webSocket: WebSocket, t: Throwable, response: okhttp3.Response?) {
-        // Handle connection failure
+    fun convertMessage(message: Messages):String{
+        return message.message+","+message.senderId+","+message.receiverId+","+message.timestamp
     }
 }

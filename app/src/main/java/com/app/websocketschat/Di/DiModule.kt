@@ -24,7 +24,7 @@ import javax.inject.Singleton
 object DiModule {
     @Provides
     fun provideWebSocketService(): WebSocketService {
-        return WebSocketService("ws://192.168.56.1:8080")
+        return WebSocketService("ws://192.168.56.1:3000")
     }
 
     @Provides

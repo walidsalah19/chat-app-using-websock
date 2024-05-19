@@ -1,6 +1,6 @@
 # Chat app 
 # Objective
-The primary objective of this chat application is to provide a real-time communication platform where users can send and receive messages instantly. The application aims to demonstrate the use of modern Android development practices, including MVVM architecture, Clean Architecture principles, and technologies such as WebSocket for real-time communication, Retrofit for network requests, Room for local data storage, and Kotlin Coroutines for asynchronous programming. The application should be robust, maintainable, and scalable, allowing easy addition of new features and improvements.
+The primary objective of this chat application is to provide a real-time communication platform where users can send and receive messages instantly. The application aims to demonstrate the use of modern Android development practices, including MVVM architecture, Clean Architecture principles, and technologies such as WebSocket for real-time communication, Room for local data storage, and Kotlin Coroutines for asynchronous programming. The application should be robust, maintainable, and scalable, allowing easy addition of new features and improvements.
 # Technologies used
 - Kotlin
 - Websocket Okhttp

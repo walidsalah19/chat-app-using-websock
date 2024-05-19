@@ -37,3 +37,6 @@ The application follows the Model-View-ViewModel (MVVM) architecture pattern, co
 - Once the application is installed on the device, open it from the app launcher.
 - Navigate through the different screens and features to verify the functionality.
   Perform various actions such as sending messages, refreshing data, and navigating between screens to ensure everything works as expected.
+# Demo
+https://github.com/walidsalah19/chat-app-using-websock/assets/67799939/48efb1bb-0c8a-42c1-a4f5-690c2b3bff68
+

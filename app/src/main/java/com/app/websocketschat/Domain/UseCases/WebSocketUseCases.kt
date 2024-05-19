@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.app.websocketschat.Data.Room.EntityMessage
 import com.app.websocketschat.Domain.Modules.Messages
 import com.app.websocketschat.Domain.Repostories.WebSocketRepository
+import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -23,7 +24,10 @@ class ConnectUseCase @Inject constructor(private val repository: WebSocketReposi
 
 class SendMessageUseCase @Inject constructor(private val repository: WebSocketRepository) {
     operator fun invoke(message: Messages) {
-        repository.sendMessage(message)
+        repository.sendMessage(serializeMessage(message))
+    }
+    fun serializeMessage(message: Messages): String {
+        return Gson().toJson(message)
     }
 }
 

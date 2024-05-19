@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface WebSocketRepository {
     fun connect()
-    fun sendMessage(message: Messages)
+    fun sendMessage(message: String)
     fun closeConnection()
     fun getAllMessages(): Flow<List<EntityMessage>>
 }

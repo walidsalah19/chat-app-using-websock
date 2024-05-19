@@ -53,7 +53,7 @@ class WebSocketRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun sendMessage(message: Messages) {
+    override fun sendMessage(message: String) {
         webSocketService.send(message)
     }
 

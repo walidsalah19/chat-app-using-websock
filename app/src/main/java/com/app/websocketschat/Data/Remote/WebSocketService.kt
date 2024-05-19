@@ -32,17 +32,14 @@ class WebSocketService(private val url: String) {
         client.dispatcher().executorService().shutdown()
     }
 
-    fun send(message: Messages) {
-        val mes=serializeMessage(message =message)
-        webSocket?.send(mes)
+    fun send(message: String) {
+        webSocket?.send(message)
     }
 
     fun close() {
         webSocket?.close(1000, "close")
     }
-    fun serializeMessage(message: Messages): String {
-        return Gson().toJson(message)
-    }
+
 
 }
 

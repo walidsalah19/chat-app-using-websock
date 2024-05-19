@@ -1,6 +1,7 @@
 package com.app.websocketschat.Data.Remote
 
-import com.app.websocketschat.Domain.Models.Messages
+import com.app.websocketschat.Domain.Modules.Messages
+import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.WebSocket
@@ -28,17 +29,20 @@ class WebSocketService(private val url: String) {
             .build()
 
         webSocket = client.newWebSocket(request, listener)
+        client.dispatcher().executorService().shutdown()
     }
 
     fun send(message: Messages) {
-        val message=convertMessage(message =message)
-        webSocket?.send(message)
+        val mes=serializeMessage(message =message)
+        webSocket?.send(mes)
     }
 
     fun close() {
         webSocket?.close(1000, "close")
     }
-    fun convertMessage(message: Messages):String{
-        return message.message+","+message.senderId+","+message.receiverId+","+message.timestamp
+    fun serializeMessage(message: Messages): String {
+        return Gson().toJson(message)
     }
+
 }
+

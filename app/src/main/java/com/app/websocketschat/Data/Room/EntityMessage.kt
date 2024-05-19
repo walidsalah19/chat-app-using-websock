@@ -2,7 +2,6 @@ package com.app.websocketschat.Data.Room
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.app.websocketschat.Domain.Models.Messages
 
 
 @Entity(tableName = "messages_table")

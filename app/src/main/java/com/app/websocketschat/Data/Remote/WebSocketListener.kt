@@ -1,9 +1,11 @@
 package com.app.websocketschat.Data.Remote
 
+import android.util.Log
 import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 import okio.ByteString
+import java.nio.charset.Charset
 
 class WebSocketListener(
     private val onMessageReceived:(String)-> Unit,
@@ -27,7 +29,9 @@ class WebSocketListener(
 
     override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
         // Binary message received
-        println("Received bytes: $bytes")
+        val text = bytes.string(Charset.forName("UTF-8"))
+        onMessageReceived(text.replace("Received bytes:",""))
+        Log.e("bytes","Received bytes: $text")
     }
 
     override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {

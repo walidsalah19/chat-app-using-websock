@@ -11,7 +11,6 @@ import com.app.websocketschat.Domain.UseCases.ConnectUseCase
 import com.app.websocketschat.Domain.UseCases.SendMessageUseCase
 import com.app.websocketschat.Domain.UseCases.WebSocketUseCases
 import com.app.websocketschat.Domain.UseCases.GetAllMessagesUseCase
-import com.app.websocketschat.Domain.UseCases.ReceivedUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,7 +24,7 @@ import javax.inject.Singleton
 object DiModule {
     @Provides
     fun provideWebSocketService(): WebSocketService {
-        return WebSocketService("ws://192.168.56.1:3000")
+        return WebSocketService("ws://192.168.56.1:8080")
     }
 
     @Provides
@@ -50,7 +49,6 @@ object DiModule {
             connect = ConnectUseCase(repository),
             sendMessage = SendMessageUseCase(repository),
             closeConnection = CloseConnectionUseCase(repository),
-            received = ReceivedUseCase(repository),
             getAllMessagesUseCase = GetAllMessagesUseCase(repository)
         )
     }

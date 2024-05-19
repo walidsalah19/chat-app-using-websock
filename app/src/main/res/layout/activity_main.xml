@@ -13,8 +13,7 @@
             android:id="@+id/recyclerview_chat"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/rl_bottom"></androidx.recyclerview.widget.RecyclerView>
-
+            android:layout_above="@id/rl_bottom"/>
         <RelativeLayout
             android:id="@+id/rl_bottom"
             android:layout_width="match_parent"
@@ -23,10 +22,7 @@
             android:background="@color/cardview_light_background"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:paddingLeft="8dp"
-            android:paddingTop="8dp"
-            android:paddingRight="8dp"
-            android:paddingBottom="8dp">
+            android:layout_margin="@dimen/_5sdp">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/send_message"
@@ -53,7 +49,7 @@
                     android:id="@+id/send_message_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
+                    android:background="@drawable/edittext_shape"
                     android:hint="write your message"
                     android:inputType="textCapSentences"
                     android:maxLines="3"

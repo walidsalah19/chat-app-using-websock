@@ -3,11 +3,10 @@ package com.app.websocketschat.Presentation.Adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.app.websocketschat.Domain.Models.Messages
+import com.app.websocketschat.Domain.Modules.Messages
 import com.app.websocketschat.R
 
 class AdapterClass(private var messagesArrayList: ArrayList<Messages>?) : RecyclerView.Adapter<AdapterClass.Help>() {

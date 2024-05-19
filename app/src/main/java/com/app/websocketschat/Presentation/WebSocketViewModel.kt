@@ -2,16 +2,12 @@ package com.app.websocketschat.Presentation
 
 // WebSocketViewModel.kt
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.room.Insert
-import com.app.websocketschat.Data.Room.EntityMessage
 import com.app.websocketschat.Domain.Mapper.Mapper
-import com.app.websocketschat.Domain.Models.Messages
+import com.app.websocketschat.Domain.Modules.Messages
 import com.app.websocketschat.Domain.UseCases.WebSocketUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -32,7 +28,6 @@ class WebSocketViewModel @Inject constructor( val webSocketUseCases: WebSocketUs
         }
 
     }
-    fun getAllMessages(): Flow<List<EntityMessage>> = webSocketUseCases.getAllMessagesUseCase.invoke()
     fun connect() {
         viewModelScope.launch {
             webSocketUseCases.connect()
@@ -40,6 +35,7 @@ class WebSocketViewModel @Inject constructor( val webSocketUseCases: WebSocketUs
     }
 
     fun sendMessage(message: Messages) {
+
         viewModelScope.launch {
             webSocketUseCases.sendMessage(message)
         }
@@ -50,6 +46,5 @@ class WebSocketViewModel @Inject constructor( val webSocketUseCases: WebSocketUs
             webSocketUseCases.closeConnection()
         }
     }
-    fun receivedData():LiveData<Messages> =webSocketUseCases.received.invoke()
 
 }

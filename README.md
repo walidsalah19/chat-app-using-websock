@@ -5,7 +5,7 @@ The primary objective of this chat application is to provide a real-time communi
 - Kotlin
 - Websocket Okhttp
 - Room Database
-- Dependency Injection
+- Dependency Injection(Dagger Hilt)
 - MVVM Architecture
 - clean code
 - Coroutin
@@ -17,7 +17,7 @@ The application follows the Model-View-ViewModel (MVVM) architecture pattern, co
 - Domain Layer: This layer contains the business logic of the application. It consists of use cases that represent the actions a user can perform in the app. Use cases are independent of any specific UI framework and are testable in isolation.
 - Data Layer: This layer is responsible for data management and communication with external data sources such as a database, network, or repository. It includes repositories that abstract the data sources and data access objects (DAOs) for database operations.
 2. Design Decisions:
-- Dependency Injection: Dagger or Hilt can be used for dependency injection to provide dependencies to different layers of the application. This promotes modularity and facilitates unit testing.
+- Dependency Injection: Dagger Hilt can be used for dependency injection to provide dependencies to different layers of the application. This promotes modularity and facilitates unit testing.
 - Coroutines: Kotlin Coroutines are used for asynchronous programming to perform long-running tasks such as network requests and database operations. Coroutines provide a concise and efficient way to handle asynchronous tasks without blocking the main thread.
 - Room Database: Room is used as the local database for caching data and providing offline support. It offers a simplified API for working with SQLite databases in Android and integrates seamlessly with LiveData and Coroutines.
 - WebSocket: OkHttp WebSocket can be used for WebSocket communication in real-time applications such as chat apps. WebSocket enables bidirectional communication between the client and server, allowing instant messaging and real-time updates.

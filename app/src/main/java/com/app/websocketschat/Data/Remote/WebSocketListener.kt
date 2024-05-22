@@ -23,7 +23,7 @@ class WebSocketListener(
     override fun onMessage(webSocket: WebSocket, text: String) {
         // Text message received
        // val chatMessage = convertJsonToMessage(text)
-        onMessageReceived(text)
+        onMessageReceived(text.replace("New Incoming Message From ",""))
         println("Received message: $text")
     }
 
